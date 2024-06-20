@@ -16,7 +16,7 @@ function ShowProduct() {
     try {
       const token = Cookies.get("token");
       console.log("Fetching data...");
-      const response = await axios.get("/product", {
+      const response = await axios.get("/products", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +37,7 @@ function ShowProduct() {
     try {
       const token = Cookies.get("token");
       console.log("Deleting product with ID:", productId);
-      const response = await axios.delete(`/product/${productId}`, {
+      const response = await axios.delete(`/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -63,8 +63,8 @@ function ShowProduct() {
               {/* Left side with product_icon */}
               {/* <img src="{{ $product_icon }}" /> */}
               <img
-               src={product.product_image}
-                alt={product.product_title}
+               src={product.image}
+                alt={product.title}
                 className="mr-6 border-2 w-[150px] h-[150px]"
               />
             </div>
@@ -82,11 +82,11 @@ function ShowProduct() {
               {/* Right side with product title, created at, and updated at */}
               <div className="mb-2 ">
                 <h1 className="text-lg uppercase">product </h1>
-                <h2 className="text-lg text-blue-500">{product.product_name}</h2>
+                <h2 className="text-lg text-blue-500">{product.title}</h2>
                 <h1 className="text-lg uppercase">product Description</h1>
-                <h2 className="text-lg text-blue-500 ">{product.product_description}</h2>
-                <h1 className="text-lg uppercase">product stock</h1>
-                <h2 className="text-lg text-blue-500 ">{product.product_stock}</h2>
+                <h2 className="text-lg text-blue-500 ">{product.description}</h2>
+                <h1 className="text-lg uppercase">product status</h1>
+                <h2 className="text-lg text-blue-500 ">{product.status}</h2>
                 <h1 className="text-lg uppercase">product link review</h1>
                 <a href={product.product_review} className="text-lg text-blue-500 ">{product.product_review}</a>
 

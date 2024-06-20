@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import axios from "../../Components/api/axios";
 import deliphoto1 from "../../asset/J&T.jpg";
 import deliphoto2 from "../../asset/VET.jpg";
 import photo from "../../asset/Candle.jpg";
 import deliphoto3 from "../../asset/kerry.jpg";
 export const Cart = () => {
+  const [products, setProductData] = useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const token = Cookies.get("token");
+      console.log("Fetching data...");
+      const response = await axios.get(`/carts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Response:", response.data);
+      setProductData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+      setProductData([]);
+    }
+  };
+
   return (
     <>
       <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
@@ -18,7 +42,37 @@ export const Cart = () => {
               <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800">
                 Customer’s Cart
               </p>
-              <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+              {products.map((cart) => (
+                <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+                <div className="pb-4 md:pb-8 w-full md:w-40">
+                  <img
+                    className="w-full hidden md:block"
+                    src={'https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724'}
+                    alt="dress"
+                  />
+                  <img className="w-full md:hidden" src={photo} alt="dress" />
+                </div>
+                <div className=" md:flex-row flex-col flex justify-between items-start w-full space-y-4 md:space-y-0">
+                  <div className="w-full flex flex-col justify-start items-start space-y-10">
+                    <h3 className="text-xl lg:flex lg:justify-center xl:text-2xl font-semibold leading-6 text-gray-800">
+                      {cart.product.title}
+                    </h3>
+                  </div>
+                  <div className="flex justify-between space-x-8 items-start w-full">
+                    {/* <p className="text-base xl:text-lg leading-6">
+                      ${cart.product.price}
+                    </p> */}
+                    <p className="text-base xl:text-lg leading-6 text-gray-800">
+                      01
+                    </p>
+                    <p className="text-base xl:text-lg font-semibold leading-6 text-gray-800">
+                    ${cart.product.price}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              ))}
+              {/* <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
                 <div className="pb-4 md:pb-8 w-full md:w-40">
                   <img
                     className="w-full hidden md:block"
@@ -75,7 +129,7 @@ export const Cart = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="flex justify-center md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
               <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50  space-y-6">

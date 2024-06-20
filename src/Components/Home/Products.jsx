@@ -1,74 +1,100 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import axios from "../../Components/api/axios";
 
 const ProductCard = ({ product }) => {
   // const { image, name, title, price, oldPrice } = product;
-  const products = [
-    {
-      id: 1,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 2,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 3,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 4,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 5,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 6,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 7,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 8,
-      image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      name: "Kraob Oil Burner",
-      title: "Product Title 1",
-      price: 30,
-      oldPrice: 45,
-    },
+
+  const [products, setProductData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const token = Cookies.get("token");
+      console.log("Fetching data...");
+      const response = await axios.get("/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Response:", response.data);
+      setProductData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+      setProductData([]);
+    }
+  };
+
+  // const products = [
+  //   {
+  //     id: 1,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 2,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 3,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 4,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 5,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 6,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 7,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 8,
+  //     image: "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     name: "Kraob Oil Burner",
+  //     title: "Product Title 1",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
    
-  ];
+  // ];
 
   return (
     <>
@@ -91,7 +117,7 @@ const ProductCard = ({ product }) => {
             >
               <a href="/">
                 <img
-                  src={product.image}
+                  src={'https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724'}
                   alt="Product"
                   className="max-sm:w-30 max-sm:h-50 lg:h-80 lg:w-72 object-cover "
                 />
@@ -106,13 +132,13 @@ const ProductCard = ({ product }) => {
                     <p className="text-lg text-center font-semibold text-black cursor-auto my-3">
                       ${product.price}
                     </p>
-                    {product.oldPrice && (
+                    {/* {product.oldPrice && (
                       <del>
                         <p className="text-sm text-center text-gray-600 cursor-auto ml-2">
                           ${product.oldPrice}
                         </p>
                       </del>
-                    )}
+                    )} */}
                   </div>
                   {/* rating */}
                   <div class="flex gap-0.5 justify-center">

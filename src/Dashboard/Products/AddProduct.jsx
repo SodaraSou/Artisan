@@ -5,17 +5,13 @@ import UploadFile from "../UploadFile";
 
 function AddProduct() {
   const [product, setProduct] = useState({
-    product_name: "",
-    product_brand: "",
-    product_description: "",
-    product_price: "",
-    product_stock: "",
-    product_rating: "",
-    product_feedback: "",
-    product_image: "",
-    product_review: "",
-    product_banner: "",
-    category_id: "",
+    name: "",
+    brand: "",
+    description: "",
+    price: "",
+    title: "",
+    status: "",
+    image: "",
   });
   const [categories, setCategories] = useState([]); 
 
@@ -26,27 +22,27 @@ function AddProduct() {
   const unsignedUploadPreset = "ntrpox3d";
 
   // Fetch categories data when component mounts
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   // Function to fetch categories data from the API
-  const fetchData = async () => {
-    try {
-      const token = Cookies.get("token");
-      console.log("Fetching data...");
-      const response = await axios.get("http://127.0.0.1:8000/api/category", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log("Response:", response.data);
-      setCategories(response.data.data);
-    } catch (error) {
-      console.error("Error fetching category data:", error);
-      setCategories([]);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const token = Cookies.get("token");
+  //     console.log("Fetching data...");
+  //     const response = await axios.get("http://artisan.devtopia.one/api/category", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     console.log("Response:", response.data);
+  //     setCategories(response.data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching category data:", error);
+  //     setCategories([]);
+  //   }
+  // };
 
   // Function to handle form input changes
   const handleInput = (e) => {
@@ -67,60 +63,56 @@ function AddProduct() {
 
     try {
       // Upload the product image to Cloudinary
-      const imageFormData = new FormData();
-      imageFormData.append("file", product.product_image);
-      imageFormData.append("upload_preset", unsignedUploadPreset);
+      // const imageFormData = new FormData();
+      // imageFormData.append("file", product.image);
+      // imageFormData.append("upload_preset", unsignedUploadPreset);
 
-      // Declare imageResponse variable
-      const imageResponse = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        imageFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      // // Declare imageResponse variable
+      // const imageResponse = await axios.post(
+      //   `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      //   imageFormData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   }
+      // );
 
-      // Upload the product banner to Cloudinary
-      const bannerFormData = new FormData();
-      bannerFormData.append("file", product.product_banner);
-      bannerFormData.append("upload_preset", unsignedUploadPreset);
+      // // Upload the product banner to Cloudinary
+      // const bannerFormData = new FormData();
+      // bannerFormData.append("file", product.product_banner);
+      // bannerFormData.append("upload_preset", unsignedUploadPreset);
 
-      // Declare bannerResponse variable
-      const bannerResponse = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        bannerFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      // // Declare bannerResponse variable
+      // const bannerResponse = await axios.post(
+      //   `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      //   bannerFormData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   }
+      // );
 
-      if (imageResponse.status === 200 && bannerResponse.status === 200) {
-        const imageUrl = imageResponse.data.secure_url;
-        const bannerUrl = bannerResponse.data.secure_url;
+      if (true) {
+        // const imageUrl = imageResponse.data.secure_url;
+        // // const bannerUrl = bannerResponse.data.secure_url;
 
-        // Update product object with uploaded image URLs
-        setProduct({ ...product, product_image: imageUrl, product_banner: bannerUrl });
+        // // Update product object with uploaded image URLs
+        // setProduct({ ...product, image: imageUrl });
 
         // Send product data to your backend server
         const productResponse = await axios.post(
-          "http://127.0.0.1:8000/api/product",
+          "http://artisan.devtopia.one/api/products",
           {
             // Include other product data here
-            product_name: product.product_name,
-            product_brand: product.product_brand,
-            product_description: product.product_description,
-            product_price: product.product_price,
-            product_stock: product.product_stock,
-            product_rating: product.product_rating,
-            product_feedback: product.product_feedback,
-            product_image: imageUrl,
-            product_review: product.product_review,
-            product_banner: bannerUrl,
-            category_id: product.category_id,
+            name: product.name,
+            brand: product.brand,
+            description: product.description,
+            price: product.price,
+            title: product.title,
+            status: product.status,
+            image: null,
           },
           {
             headers: {
@@ -130,21 +122,17 @@ function AddProduct() {
         );
 
         // Check if the product was successfully added
-        if (productResponse.status === 200) {
+        if (productResponse.status === 204) {
           setSuccessMessage("Product added successfully.");
           // Clear product data
           setProduct({
-            product_name: "",
-            product_brand: "",
-            product_description: "",
-            product_price: "",
-            product_stock: "",
-            product_rating: "",
-            product_feedback: "",
-            product_image: null,
-            product_review: "",
-            product_banner: null,
-            category_id: "",
+            name: "",
+            brand: "",
+            description: "",
+            price: "",
+            title: "",
+            status: "",
+            image: null,
           });
         } else {
           // If there was an issue with the request, display an error message
@@ -159,7 +147,7 @@ function AddProduct() {
 
   // Function to handle image upload
   const handleImageUpload = (imageUrl, bannerUrl) => {
-    setProduct({ ...product, product_image: imageUrl, product_banner: bannerUrl });
+    setProduct({ ...product, image: imageUrl, product_banner: bannerUrl });
   };
 
   const handleConfirmUpload = async (imageUrl,bannerUrl) => {
@@ -183,47 +171,47 @@ function AddProduct() {
       <div className="w-[600px] bg-white shadow-md rounded px-5 py-4">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_name">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
               Product Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="product_name"
+              id="name"
               type="text"
               placeholder="Product Name"
-              name="product_name"
-              value={product.product_name}
+              name="name"
+              value={product.name}
               onChange={handleInput}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_brand">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="brand">
               Product Brand
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="product_brand"
+              id="brand"
               type="text"
               placeholder="Product Brand"
-              name="product_brand"
-              value={product.product_brand}
+              name="brand"
+              value={product.brand}
               onChange={handleInput}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_description">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
               Product Description
             </label>
             <textarea
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="product_description"
+              id="description"
               placeholder="Product Description"
-              name="product_description"
-              value={product.product_description}
+              name="description"
+              value={product.description}
               onChange={handleInput}
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category_id">
               Category
             </label>
@@ -240,67 +228,67 @@ function AddProduct() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_stock">
-              Stock
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+              Title
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="product_stock"
-              type="number"
+              id="title"
+              type="text"
               placeholder="Stock"
-              name="product_stock"
-              value={product.product_stock}
+              name="title"
+              value={product.title}
               onChange={handleInput}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_price">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
               Price
             </label>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center pl-2">$</span>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 pl-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="product_price"
+                id="price"
                 type="number"
                 placeholder="Price"
-                name="product_price"
-                value={product.product_price}
+                name="price"
+                value={product.price}
                 onChange={handleInput}
               />
             </div>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_review">
-              Link video Product
+              Status
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="product_review"
+              id="status"
               type="text"
               placeholder="Link video Product"
-              name="product_review"
-              value={product.product_review}
+              name="status"
+              value={product.status}
               onChange={handleInput}
             />
           </div>
           <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_image">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
                 Product Image
               </label>
               <UploadFile
-                section="product_image"
+                section="image"
                 cloudName={cloudName}
                 unsignedUploadPreset={unsignedUploadPreset}
-                handleImageUpload={(imageUrl) => setProduct({ ...product, product_image: imageUrl })}
+                handleImageUpload={(imageUrl) => setProduct({ ...product, image: imageUrl })}
                 handleIconUpload={(imageUrl) => setProduct({ ...product, product_banner: imageUrl })}
                 onConfirmUpload={handleConfirmUpload}
                 setUploadConfirmed={setUploadConfirmed}
               />
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product_banner">
                 Product Banner
               </label>
@@ -314,7 +302,7 @@ function AddProduct() {
                 onConfirmUpload={handleConfirmUpload}
                 setUploadConfirmed={setUploadConfirmed}
               />
-            </div>
+            </div> */}
             {/* Error and success messages */}
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             {successMessage && (

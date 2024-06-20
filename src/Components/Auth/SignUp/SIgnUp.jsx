@@ -10,7 +10,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirm] = useState("");
   const [is_active, setIsActive] = useState(0);
-  const [role, setRole] = useState(0);
+  const [role, setRole] = useState("user");
   const { signup, loading, error: authError } = useAuthContext(); // Get loading state and error message from useAuthContext
 
 

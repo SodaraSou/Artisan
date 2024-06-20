@@ -18,14 +18,14 @@ function UserTable() {
       const token = Cookies.get("token");
       console.log("Fetching data...");
       const response = await axios.request({
-        url: "/profile",
+        url: "/users",
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       // console.log("Response:", response.data);
-      setUserData(response.data.data);
+      setUserData(response.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
       setUserData([]);
@@ -89,23 +89,23 @@ function UserTable() {
               <td className="border border-gray-500 p-2">{data.name}</td>
               <td className="border border-gray-500 p-2">{data.email}</td>
               <td className="border border-gray-500 p-2">
-                {data.email_verified_at || "null"}
+                null
               </td>
               <td className="border border-gray-500 p-2">
-                {data.google_id || "null"}
+                null
               </td>
               <td className="border border-gray-500 p-2">{data.gender}</td>
-              <td className="border border-gray-500 p-2">{data.is_active}</td>
+              <td className="border border-gray-500 p-2">null</td>
               <td className="border border-gray-500 p-2">
-                {data.user_image || "null"}
+                null
               </td>
               <td className="border border-gray-500 p-2">
-                {data.phone_number || "null"}
+               null
               </td>
               <td className="border border-gray-500 p-2">
-                {data.user_address || "null"}
+                null
               </td>
-              <td className="border border-gray-500 p-2">{data.status}</td>
+              <td className="border border-gray-500 p-2">null</td>
               <td className="border border-gray-500 p-2">{data.created_at}</td>
               <td className="border border-gray-500 p-2">{data.updated_at}</td>
               <td className=" border-gray-500 p-2 flex">

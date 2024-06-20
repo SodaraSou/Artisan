@@ -1,111 +1,137 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import axios from "../../Components/api/axios";
 import { Link } from "react-router-dom";
 // import Filter from "./FilterSearch";
 const ProductCard = ({ product }) => {
   // const { image, brand, title, price, oldPrice } = product;
-  const products = [
-    {
-      id: 1,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLlQqHvEcDeCTduFjLgTtF6MeHigO_23-pfg&s",
-      brand: "Glass Light",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SALE",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 2,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXg76E2FB_2ljkYTTZJtEVUzEcIcNAzj3pNw&s",
-      brand: "Krama Shoes",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SOLD",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 3,
-      image:
-        "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      brand: "Kraob Oil Burner",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SOLD",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 4,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLlQqHvEcDeCTduFjLgTtF6MeHigO_23-pfg&s",
-      brand: "Glass Light",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SALE",
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 5,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXg76E2FB_2ljkYTTZJtEVUzEcIcNAzj3pNw&s",
-      brand: "Krama Shoes",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SALE",
 
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 6,
-      image:
-        "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      brand: "Kraob Oil Burner",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SALE",
+  const [products, setProductData] = useState([]);
 
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 7,
-      image:
-        "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
-      brand: "Kraob Oil Burner",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SALE",
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-      price: 30,
-      oldPrice: 45,
-    },
-    {
-      id: 8,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXg76E2FB_2ljkYTTZJtEVUzEcIcNAzj3pNw&s",
-      brand: "Krama Shoes",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
-      title: "Product Title 1",
-      status: "SALE",
+  const fetchData = async () => {
+    try {
+      const token = Cookies.get("token");
+      console.log("Fetching data...");
+      const response = await axios.get("/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Response:", response.data);
+      setProductData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+      setProductData([]);
+    }
+  };
 
-      price: 30,
-      oldPrice: 45,
-    },
+  // const products = [
+  //   {
+  //     id: 1,
+  //     image:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLlQqHvEcDeCTduFjLgTtF6MeHigO_23-pfg&s",
+  //     brand: "Glass Light",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SALE",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 2,
+  //     image:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXg76E2FB_2ljkYTTZJtEVUzEcIcNAzj3pNw&s",
+  //     brand: "Krama Shoes",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SOLD",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 3,
+  //     image:
+  //       "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     brand: "Kraob Oil Burner",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SOLD",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 4,
+  //     image:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLlQqHvEcDeCTduFjLgTtF6MeHigO_23-pfg&s",
+  //     brand: "Glass Light",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SALE",
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 5,
+  //     image:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXg76E2FB_2ljkYTTZJtEVUzEcIcNAzj3pNw&s",
+  //     brand: "Krama Shoes",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SALE",
+
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 6,
+  //     image:
+  //       "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     brand: "Kraob Oil Burner",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SALE",
+
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 7,
+  //     image:
+  //       "https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724",
+  //     brand: "Kraob Oil Burner",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SALE",
+
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
+  //   {
+  //     id: 8,
+  //     image:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXg76E2FB_2ljkYTTZJtEVUzEcIcNAzj3pNw&s",
+  //     brand: "Krama Shoes",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duisvitae ante vel eros fermentum faucibus sit amet euismod lorem.",
+  //     title: "Product Title 1",
+  //     status: "SALE",
+
+  //     price: 30,
+  //     oldPrice: 45,
+  //   },
     
-  ];
+  // ];
 
   return (
     <>
@@ -125,7 +151,7 @@ const ProductCard = ({ product }) => {
             >
               <div className="relative">
                 <img
-                  src={product.image}
+                  src={'https://camthrive.com/cdn/shop/products/JayaOrganics-Kraoboil-11_2527x.jpg?v=1669315724'}
                   alt="Product"
                   className="max-sm:w-30 max-sm:h-50 lg:h-80 lg:w-72 object-cover rounded-t-xl"
                 />
@@ -170,7 +196,7 @@ const ProductCard = ({ product }) => {
 
       {/* Pagination */}
 
-      <ul className="flex justify-center text-xs font-medium space-x-1 py-10">
+      {/* <ul className="flex justify-center text-xs font-medium space-x-1 py-10">
         <li>
           <a
             href="/?page=1"
@@ -241,7 +267,7 @@ const ProductCard = ({ product }) => {
             </svg>
           </a>
         </li>
-      </ul>
+      </ul> */}
     </>
   );
 };
