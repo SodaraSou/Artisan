@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.94863c45.css",
+    "main.js": "/static/js/main.930db57e.js",
+    "static/media/debit card.png": "/static/media/debit card.2cdb5af9ad4bd234c0b6.png",
+    "static/media/All card.png": "/static/media/All card.cda6f5ebe7b3b16290c5.png",
+    "static/media/img1.png": "/static/media/img1.90d5d9a4f79bcc80fb81.png",
+    "static/media/Candle.jpg": "/static/media/Candle.33be9970f99a0fbc2794.jpg",
+    "static/media/logo.png": "/static/media/logo.0af4d1ce577e3ceedc22.png",
+    "static/media/VET.jpg": "/static/media/VET.cf4c80e925b658e7f553.jpg",
+    "index.html": "/index.html",
+    "main.94863c45.css.map": "/static/css/main.94863c45.css.map",
+    "main.930db57e.js.map": "/static/js/main.930db57e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94863c45.css",
+    "static/js/main.930db57e.js"
+  ]
+}
